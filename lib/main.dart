@@ -74,7 +74,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         onPressed: () async {
                           final XFile? _image = await _picker.pickImage(source: ImageSource.gallery);
                           _file = File(_image!.path);
-                          setState(() {});
                         },
                         child: const Text('画像を選択')
                     )
@@ -85,11 +84,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     bottomNavigationBar: const Footer(),
     );
   }
