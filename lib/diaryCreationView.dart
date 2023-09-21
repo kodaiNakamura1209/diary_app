@@ -3,8 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:diary_app/db/database_manager.dart';
 
 class diaryCreationView extends StatelessWidget {
+
+  //database_manager.dartのDatabaseManagerクラスをインスタンス化
+  final DatabaseManager dbManager = DatabaseManager.instance;
 
   final ImagePicker _picker = ImagePicker();  // 画像選択用オブジェクト
   File? _file;  // 画像格納用ファイルオブジェクト  (?はnullを許容するという意味)
@@ -49,4 +53,6 @@ class diaryCreationView extends StatelessWidget {
         ),
     );
   }
+
+
 }
