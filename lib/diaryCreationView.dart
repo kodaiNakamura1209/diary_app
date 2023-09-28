@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:diary_app/db/diary_table_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:diary_app/db/database_manager.dart';
+import 'package:sqflite_common/sqlite_api.dart';
 
 class diaryCreationView extends StatelessWidget {
 
@@ -41,18 +43,48 @@ class diaryCreationView extends StatelessWidget {
           ),
         ),
       ),
-        floatingActionButton: FloatingActionButton.large(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30), //角の丸み
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton.large(   // 画像追加ボタン
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30), //角の丸み
+            ),
+            child: const Icon(Icons.my_library_add),
+            onPressed: () {_insert();
+            },
           ),
-          child: const Icon(Icons.add_a_photo),
-          onPressed: () async {
-            final XFile? _image = await _picker.pickImage(source: ImageSource.gallery);
-            _file = File(_image!.path);
-          },
-        ),
+          SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton.large(   // 画像追加ボタン
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30), //角の丸み
+            ),
+            child: const Icon(Icons.add_a_photo),
+            onPressed: () async {
+              final XFile? _image = await _picker.pickImage(source: ImageSource.gallery);
+              _file = File(_image!.path);
+            },
+          ),
+        ],
+      ),
     );
   }
 
-
+  // insertが押されたときのメソッド
+  void _insert() async {
+    DiaryTableDao dao = DatabaseManager.getDiaryTableDao();
+    Database db = await dbManager.database;
+    Map<String, dynamic> row = {
+      dao.columnDiaryDate : 20230925,
+      dao.columnDiaryText : "日記",
+      dao.columnImageId1 : null,
+      dao.columnImageId2 : null,
+      dao.columnImageId3 : null,
+      dao.columnImageId4 : null,
+    };
+    final id = await dao.insert(db,row);
+    print('inserted row id: $id');
+  }
 }
