@@ -46,12 +46,13 @@ class diaryCreationView extends StatelessWidget {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          FloatingActionButton.large(   // 画像追加ボタン
+          FloatingActionButton.large(   // 作成ボタン
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30), //角の丸み
             ),
             child: const Icon(Icons.my_library_add),
-            onPressed: () {_insert();
+            onPressed: () {
+              _insert();
             },
           ),
           SizedBox(

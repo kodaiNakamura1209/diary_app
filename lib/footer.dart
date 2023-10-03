@@ -1,4 +1,5 @@
 import 'package:diary_app/diaryCreationView.dart';
+import 'package:diary_app/diaryListView.dart';
 import 'package:flutter/material.dart';
 
 class Footer extends StatefulWidget {
@@ -12,10 +13,20 @@ class _Footer extends State {
 
   // ボタンが押された時の処理
   void _onTap(int index) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => diaryCreationView()),
-    );
+    if(0 == index){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => diaryListView()),
+      );
+    } else if (1 == index){
+    } else if (2 == index){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => diaryCreationView()),
+      );
+    } else {
+
+    }
   }
 
   @override

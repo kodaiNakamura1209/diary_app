@@ -6,7 +6,7 @@ class DatabaseManager{
 
   static Database? _database; // データベースオブジェクト
 
-  // DatabaseHelperクラスをシングルトンにするためのコンストラクタ
+  // DatabaseManagerクラスをシングルトンにするためのコンストラクタ
   DatabaseManager._privateConstructor();
   static final DatabaseManager instance = DatabaseManager._privateConstructor();
 

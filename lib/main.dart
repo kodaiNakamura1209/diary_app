@@ -7,7 +7,7 @@ import 'package:intl/date_symbol_data_local.dart';    // 翻訳用ライブラ�
 import 'package:image_picker/image_picker.dart';      // 画像操作用ライブラリ
 
 void main() {
-  initializeDateFormatting('ja').then((_) => runApp(MyApp())); //initializeDateFormatting('ja').then((_) => runApp(MyApp()))・・・プリ自体のlocaleデータのセットアップ
+  initializeDateFormatting('ja').then((_) => runApp(MyApp())); //initializeDateFormatting('ja').then((_) => runApp(MyApp()))・・・アプリ自体のlocaleデータのセットアップ
 }
 
 class MyApp extends StatelessWidget {
