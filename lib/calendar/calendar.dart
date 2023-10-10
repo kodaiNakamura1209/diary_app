@@ -8,7 +8,9 @@ class Calendar extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageView(
       children: [
-        CalendarTable(),CalendarTable(),CalendarTable(),
+        CalendarTable(2023,10),
+        CalendarTable(2023,11),
+        CalendarTable(2023,12),
       ],
     );
   }
