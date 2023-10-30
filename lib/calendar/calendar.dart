@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'calendar_table.dart';
 
 class Calendar extends StatelessWidget {
-  late final DateTime _startYearMonth = DateTime(2023, 10, 1);
-  late final DateTime _endYearMonth = DateTime(2024, 10, 1);
+  final DateTime startYearMonth;
+  final DateTime endYearMonth;
+  // タップをトリガーに呼び出す関数
+  final Function? onTapDate;
+
+  Calendar({Key? key, this.onTapDate, required this.startYearMonth, required this.endYearMonth}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return PageView(
-      children: CreateCalendarWiget(_startYearMonth, _endYearMonth),
+      children: CreateCalendarWiget(startYearMonth, endYearMonth),
       // children: [
       //   CalendarTable(2023,10),
       //   CalendarTable(2023,11),
@@ -34,7 +38,7 @@ class Calendar extends StatelessWidget {
       while(intEndYearMonth >= (startYear * 100) + startMonth ){
 
         // カレンダーテーブルリストに現在のひと月分のカレンダーテーブルを追加
-        calendarTableList.add(CalendarTable(startYear, startMonth));
+        calendarTableList.add(CalendarTable(onTapDate: onTapDate,startYear: startYear, startMonth: startMonth));
         // 開始月を翌月にする
         ++startMonth;
         // 開始月が12を超えた場合、開始年と開始月を次の年の1月に変更する

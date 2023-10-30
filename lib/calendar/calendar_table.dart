@@ -14,11 +14,13 @@ class CalendarTable extends StatelessWidget {
   final Widget SPACER = const Spacer();
   // 日付加算用の期間クラス(1日間を表している)
   final Duration duration = const Duration(days:1);
+  // タップをトリガーに呼び出す関数
+  final Function? onTapDate;
 
   // コンストラクタ
   // startYear・・・対象年
   // startMonth・・・対象月
-  CalendarTable(this.startYear, this.startMonth){
+  CalendarTable({Key? key, this.onTapDate, required this.startYear, required this.startMonth}) : super(key: key){
     _startDate = DateTime(startYear,startMonth,1);
   }
 
@@ -78,7 +80,7 @@ class CalendarTable extends StatelessWidget {
           // 月の初めが日曜日の場合
           case CalendarConstants.Sunday:
             for(int j = 0; j < 7; j++){
-              dateBlockList.add(DateBlock(calendarDay.day, null));
+              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
               // カレンダー日付を次の日にする
               calendarDay = calendarDay.add(duration);
             }
@@ -88,7 +90,7 @@ class CalendarTable extends StatelessWidget {
           case CalendarConstants.Monday:
             dateBlockList.add(SPACER);
             for(int j = 0; j < 6; j++){
-              dateBlockList.add(DateBlock(calendarDay.day, null));
+              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
               // カレンダー日付を次の日にする
               calendarDay = calendarDay.add(duration);
             }
@@ -99,7 +101,7 @@ class CalendarTable extends StatelessWidget {
             dateBlockList.add(SPACER);
             dateBlockList.add(SPACER);
             for(int j = 0; j < 5; j++){
-              dateBlockList.add(DateBlock(calendarDay.day, null));
+              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
               // カレンダー日付を次の日にする
               calendarDay = calendarDay.add(duration);
             }
@@ -111,7 +113,7 @@ class CalendarTable extends StatelessWidget {
             dateBlockList.add(SPACER);
             dateBlockList.add(SPACER);
             for(int j = 0; j < 4; j++){
-              dateBlockList.add(DateBlock(calendarDay.day, null));
+              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
               // カレンダー日付を次の日にする
               calendarDay = calendarDay.add(duration);
             }
@@ -124,7 +126,7 @@ class CalendarTable extends StatelessWidget {
             dateBlockList.add(SPACER);
             dateBlockList.add(SPACER);
             for(int j = 0; j < 3; j++){
-              dateBlockList.add(DateBlock(calendarDay.day, null));
+              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
               // カレンダー日付を次の日にする
               calendarDay = calendarDay.add(duration);
             }
@@ -138,7 +140,7 @@ class CalendarTable extends StatelessWidget {
             dateBlockList.add(SPACER);
             dateBlockList.add(SPACER);
             for(int j = 0; j < 2; j++){
-              dateBlockList.add(DateBlock(calendarDay.day, null));
+              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
               // カレンダー日付を次の日にする
               calendarDay = calendarDay.add(duration);
             }
@@ -152,7 +154,7 @@ class CalendarTable extends StatelessWidget {
             dateBlockList.add(SPACER);
             dateBlockList.add(SPACER);
             dateBlockList.add(SPACER);
-            dateBlockList.add(DateBlock(calendarDay.day, null));
+            dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
             // カレンダー日付を次の日にする
             calendarDay = calendarDay.add(duration);
             tableRowList.add(TableRow(children: dateBlockList));
@@ -166,7 +168,7 @@ class CalendarTable extends StatelessWidget {
             dateBlockList.add(SPACER);
           } else {
             // 日付をDataBlockのリストに入れる
-            dateBlockList.add(DateBlock(calendarDay.day, null));
+            dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
             // カレンダー日付を次の日にする
             calendarDay = calendarDay.add(duration);
           }

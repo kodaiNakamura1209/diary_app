@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
-import 'package:flutter_calendar_carousel/classes/event.dart';
-import 'package:intl/date_symbol_data_local.dart';    // 翻訳用ライブラリ
 import 'package:diary_app/calendar/calendar.dart';
+import 'package:diary_app/diaryDetailView.dart';
 
 class diaryListView extends StatelessWidget {
   @override
@@ -10,13 +8,24 @@ class diaryListView extends StatelessWidget {
 
     List<DateTime> _days=[DateTime(2020, 12, 20), DateTime(2020, 12, 21)]; //アイコンを表示する日
 
+    // void _onTapDate(){
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => diaryDetailView()),
+    //   );
+    // }
+    DateTime onTapDate(DateTime date){
+      print(date.year.toString()+"年"+date.month.toString()+"月"+date.day.toString()+"日");
+      return date;
+    }
+
     return Scaffold(
         appBar: AppBar(
 
           title: Text("日記一覧"),
         ),
         body: Container(
-          child: Calendar(),
+          child: Calendar(onTapDate: onTapDate, startYearMonth: DateTime(2023, 11, 1),endYearMonth: DateTime(2024, 12, 1)),
         )
       );
     }
