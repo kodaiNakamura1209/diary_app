@@ -8,15 +8,15 @@ class diaryListView extends StatelessWidget {
 
     List<DateTime> _days=[DateTime(2020, 12, 20), DateTime(2020, 12, 21)]; //アイコンを表示する日
 
-    // void _onTapDate(){
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => diaryDetailView()),
-    //   );
-    // }
-    DateTime onTapDate(DateTime date){
+    // 日付押下時の処理
+    void onTapDate(DateTime date){
       print(date.year.toString()+"年"+date.month.toString()+"月"+date.day.toString()+"日");
-      return date;
+
+      // 日記詳細画面に遷移
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => diaryDetailView()),
+      );
     }
 
     return Scaffold(

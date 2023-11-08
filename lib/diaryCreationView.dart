@@ -9,7 +9,7 @@ import 'package:sqflite_common/sqlite_api.dart';
 
 class diaryCreationView extends StatelessWidget {
 
-  //database_manager.dartのDatabaseManagerクラスをインスタンス化
+  //database_manager.dartのDatabaseManagerクラスをインスタンスを取得
   final DatabaseManager dbManager = DatabaseManager.instance;
 
   final ImagePicker _picker = ImagePicker();  // 画像選択用オブジェクト

@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class CalendarConstants{
   // 表示用年月
   static const String dispYear = "年";
@@ -18,4 +20,7 @@ class CalendarConstants{
   static const int Thursday = 4;
   static const int Friday = 5;
   static const int Saturday = 6;
+
+  // 空欄のwidget
+  static const Widget SPACER = Spacer();
 }

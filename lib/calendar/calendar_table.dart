@@ -10,8 +10,6 @@ class CalendarTable extends StatelessWidget {
   late final int startMonth;
   // テーブル生成対象年月(Date)
   late final DateTime _startDate;
-  // 空欄のwidget
-  final Widget SPACER = const Spacer();
   // 日付加算用の期間クラス(1日間を表している)
   final Duration duration = const Duration(days:1);
   // タップをトリガーに呼び出す関数
@@ -88,7 +86,7 @@ class CalendarTable extends StatelessWidget {
             break;
           // 月の初めが月曜日の場合
           case CalendarConstants.Monday:
-            dateBlockList.add(SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
             for(int j = 0; j < 6; j++){
               dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
               // カレンダー日付を次の日にする
@@ -98,8 +96,8 @@ class CalendarTable extends StatelessWidget {
             break;
           // 月の初めが火曜日の場合
           case CalendarConstants.Tuesday:
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
             for(int j = 0; j < 5; j++){
               dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
               // カレンダー日付を次の日にする
@@ -109,9 +107,9 @@ class CalendarTable extends StatelessWidget {
             break;
           // 月の初めが水曜日の場合
           case CalendarConstants.Wednesday:
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
             for(int j = 0; j < 4; j++){
               dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
               // カレンダー日付を次の日にする
@@ -121,10 +119,10 @@ class CalendarTable extends StatelessWidget {
             break;
           // 月の初めが木曜日の場合
           case CalendarConstants.Thursday:
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
             for(int j = 0; j < 3; j++){
               dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
               // カレンダー日付を次の日にする
@@ -134,11 +132,11 @@ class CalendarTable extends StatelessWidget {
             break;
           // 月の初めが金曜日の場合
           case CalendarConstants.Friday:
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
             for(int j = 0; j < 2; j++){
               dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
               // カレンダー日付を次の日にする
@@ -148,12 +146,12 @@ class CalendarTable extends StatelessWidget {
             break;
           // 月の初めが土曜日の場合
           case CalendarConstants.Saturday:
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
-            dateBlockList.add(SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
             dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
             // カレンダー日付を次の日にする
             calendarDay = calendarDay.add(duration);
@@ -165,7 +163,7 @@ class CalendarTable extends StatelessWidget {
         for(int j = 0; j < 7; j++){
           // カレンダーの月が変わっていたら空widgetを入れる
           if(month != calendarDay.month){
-            dateBlockList.add(SPACER);
+            dateBlockList.add(CalendarConstants.SPACER);
           } else {
             // 日付をDataBlockのリストに入れる
             dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));

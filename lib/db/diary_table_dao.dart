@@ -1,4 +1,4 @@
-
+import 'package:diary_app/db/diary_table_dto.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DiaryTableDao{
@@ -34,4 +34,31 @@ class DiaryTableDao{
     return await db.insert(table, row); //テーブルにマップ型のものを挿入。追加時のrowIDを返り値にする
   }
 
+  // 全件取得
+  Future<List<Map<String, dynamic>>?> queryAllRows(Database db) async {
+    return await db.query(table); //全件取得
+  }
+
+  // 日付を条件に取得
+  Future<DiaryTableDto>queryRowDiaryDate(Database db, int diaryDate) async {
+    // 日付を条件に検索をする
+    var result = await db.query(table,where: columnDiaryDate+"=?",whereArgs: [diaryDate]);
+
+    // 取得結果をDtoにつめる
+    // Map<String, dynamic> row = {
+    //   columnDiaryDate : result[0][columnDiaryDate]
+    // };
+
+    result.forEach((row) => print(row));
+    DiaryTableDto dto = DiaryTableDto();
+    dto.diaryDate = result[0][columnDiaryDate] as int;
+    dto.diaryText = result[0][columnDiaryText] as String;
+    dto.imageId1 = result[0][columnImageId1] as String?;
+    dto.imageId2 = result[0][columnImageId2] as String?;
+    dto.imageId3 = result[0][columnImageId3] as String?;
+    dto.imageId4 = result[0][columnImageId4] as String?;
+
+    print(dto.diaryDate.toString()+","+dto.diaryText);
+    return dto;
+  }
 }

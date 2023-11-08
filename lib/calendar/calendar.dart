@@ -13,10 +13,6 @@ class Calendar extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageView(
       children: CreateCalendarWiget(startYearMonth, endYearMonth),
-      // children: [
-      //   CalendarTable(2023,10),
-      //   CalendarTable(2023,11),
-      // ],
     );
   }
 
