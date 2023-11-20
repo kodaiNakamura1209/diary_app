@@ -14,12 +14,30 @@ class CalendarTable extends StatelessWidget {
   final Duration duration = const Duration(days:1);
   // タップをトリガーに呼び出す関数
   final Function? onTapDate;
+  // icon表示日付のマップ
+  final Map<int,IconData>? _iconMap;
 
   // コンストラクタ
   // startYear・・・対象年
   // startMonth・・・対象月
-  CalendarTable({Key? key, this.onTapDate, required this.startYear, required this.startMonth}) : super(key: key){
+  CalendarTable({Key? key, this.onTapDate, required this.startYear, required this.startMonth, Map<int, IconData>? iconMap}) : _iconMap = iconMap, super(key: key){
     _startDate = DateTime(startYear,startMonth,1);
+  }
+  // icon取得メソッド
+  IconData? getIcon(DateTime date){
+    // icon表示日付Mapのnullチェック
+    if(_iconMap != null){
+      int targetDate = (date.year*10000) + (date.month*100) + date.day;
+
+      // 引数の日付とマッチする日付がMapにあった場合、iconDataを返す
+      if(_iconMap!.containsKey(targetDate)){
+        return _iconMap?[targetDate];
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
   }
 
   @override
@@ -78,7 +96,7 @@ class CalendarTable extends StatelessWidget {
           // 月の初めが日曜日の場合
           case CalendarConstants.Sunday:
             for(int j = 0; j < 7; j++){
-              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
+              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:getIcon(calendarDay)));
               // カレンダー日付を次の日にする
               calendarDay = calendarDay.add(duration);
             }
@@ -88,7 +106,7 @@ class CalendarTable extends StatelessWidget {
           case CalendarConstants.Monday:
             dateBlockList.add(CalendarConstants.SPACER);
             for(int j = 0; j < 6; j++){
-              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
+              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:getIcon(calendarDay)));
               // カレンダー日付を次の日にする
               calendarDay = calendarDay.add(duration);
             }
@@ -99,7 +117,7 @@ class CalendarTable extends StatelessWidget {
             dateBlockList.add(CalendarConstants.SPACER);
             dateBlockList.add(CalendarConstants.SPACER);
             for(int j = 0; j < 5; j++){
-              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
+              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:getIcon(calendarDay)));
               // カレンダー日付を次の日にする
               calendarDay = calendarDay.add(duration);
             }
@@ -111,7 +129,7 @@ class CalendarTable extends StatelessWidget {
             dateBlockList.add(CalendarConstants.SPACER);
             dateBlockList.add(CalendarConstants.SPACER);
             for(int j = 0; j < 4; j++){
-              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
+              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:getIcon(calendarDay)));
               // カレンダー日付を次の日にする
               calendarDay = calendarDay.add(duration);
             }
@@ -124,7 +142,7 @@ class CalendarTable extends StatelessWidget {
             dateBlockList.add(CalendarConstants.SPACER);
             dateBlockList.add(CalendarConstants.SPACER);
             for(int j = 0; j < 3; j++){
-              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
+              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:getIcon(calendarDay)));
               // カレンダー日付を次の日にする
               calendarDay = calendarDay.add(duration);
             }
@@ -138,7 +156,7 @@ class CalendarTable extends StatelessWidget {
             dateBlockList.add(CalendarConstants.SPACER);
             dateBlockList.add(CalendarConstants.SPACER);
             for(int j = 0; j < 2; j++){
-              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
+              dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:getIcon(calendarDay)));
               // カレンダー日付を次の日にする
               calendarDay = calendarDay.add(duration);
             }
@@ -152,7 +170,7 @@ class CalendarTable extends StatelessWidget {
             dateBlockList.add(CalendarConstants.SPACER);
             dateBlockList.add(CalendarConstants.SPACER);
             dateBlockList.add(CalendarConstants.SPACER);
-            dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
+            dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:getIcon(calendarDay)));
             // カレンダー日付を次の日にする
             calendarDay = calendarDay.add(duration);
             tableRowList.add(TableRow(children: dateBlockList));
@@ -166,7 +184,7 @@ class CalendarTable extends StatelessWidget {
             dateBlockList.add(CalendarConstants.SPACER);
           } else {
             // 日付をDataBlockのリストに入れる
-            dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:null));
+            dateBlockList.add(DateBlock(onTapDate:onTapDate,date:calendarDay, icon:getIcon(calendarDay)));
             // カレンダー日付を次の日にする
             calendarDay = calendarDay.add(duration);
           }

@@ -35,8 +35,22 @@ class DiaryTableDao{
   }
 
   // 全件取得
-  Future<List<Map<String, dynamic>>?> queryAllRows(Database db) async {
-    return await db.query(table); //全件取得
+  Future<DiaryTableDto> queryAllRows(Database db) async {
+    // 日付を全件検索する
+    var result = await db.rawQuery("SELECT "+ columnDiaryDate +  " FROM " + table);
+
+    // 検索した情報をListにつめる
+    List<int> dateList =  [];
+    for (var row in result) {
+      dateList.add(row[columnDiaryDate] as int);
+      print(row);
+    }
+
+    // 検索結果をDTOにつめる
+    DiaryTableDto dto = DiaryTableDto();
+    dto.diaryDateList = dateList;
+
+    return dto;
   }
 
   // 日付を条件に取得
@@ -44,12 +58,6 @@ class DiaryTableDao{
     // 日付を条件に検索をする
     var result = await db.query(table,where: columnDiaryDate+"=?",whereArgs: [diaryDate]);
 
-    // 取得結果をDtoにつめる
-    // Map<String, dynamic> row = {
-    //   columnDiaryDate : result[0][columnDiaryDate]
-    // };
-
-    result.forEach((row) => print(row));
     DiaryTableDto dto = DiaryTableDto();
     dto.diaryDate = result[0][columnDiaryDate] as int;
     dto.diaryText = result[0][columnDiaryText] as String;
@@ -57,8 +65,6 @@ class DiaryTableDao{
     dto.imageId2 = result[0][columnImageId2] as String?;
     dto.imageId3 = result[0][columnImageId3] as String?;
     dto.imageId4 = result[0][columnImageId4] as String?;
-
-    print(dto.diaryDate.toString()+","+dto.diaryText);
     return dto;
   }
 }

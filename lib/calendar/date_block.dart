@@ -25,7 +25,7 @@ class DateBlock extends StatelessWidget {
       // アイコン指定ありの場合
       return
         InkWell(
-          onTap: (){print("タップしました");},
+          onTap: (){onTapDate!(date);},
           child: Container(
             height: 40,
             child:Column(

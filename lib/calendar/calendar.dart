@@ -6,8 +6,9 @@ class Calendar extends StatelessWidget {
   final DateTime endYearMonth;
   // タップをトリガーに呼び出す関数
   final Function? onTapDate;
+  final Map<int,IconData>? iconMap;
 
-  Calendar({Key? key, this.onTapDate, required this.startYearMonth, required this.endYearMonth}) : super(key: key);
+  Calendar({Key? key, this.onTapDate, required this.startYearMonth, required this.endYearMonth, this.iconMap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class Calendar extends StatelessWidget {
       while(intEndYearMonth >= (startYear * 100) + startMonth ){
 
         // カレンダーテーブルリストに現在のひと月分のカレンダーテーブルを追加
-        calendarTableList.add(CalendarTable(onTapDate: onTapDate,startYear: startYear, startMonth: startMonth));
+        calendarTableList.add(CalendarTable(onTapDate: onTapDate,startYear: startYear, startMonth: startMonth, iconMap: iconMap,));
         // 開始月を翌月にする
         ++startMonth;
         // 開始月が12を超えた場合、開始年と開始月を次の年の1月に変更する

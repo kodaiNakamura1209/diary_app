@@ -7,6 +7,7 @@ class DiaryTableDto{
   String? _imageId2;
   String? _imageId3;
   String? _imageId4;
+  List<int>? _diaryDateList;
 
   // Getter
   int get diaryDate => _diaryDate;
@@ -15,6 +16,7 @@ class DiaryTableDto{
   String? get imageId2 => _imageId2;
   String? get imageId3 => _imageId3;
   String? get imageId4 => _imageId4;
+  List<int>? get diaryDateList => _diaryDateList;
 
   // setter
   set diaryDate (int i){
@@ -34,5 +36,8 @@ class DiaryTableDto{
   }
   set imageId4 (String? s){
     _imageId4 = s;
+  }
+  set diaryDateList (List<int>? intList){
+    _diaryDateList = intList;
   }
 }

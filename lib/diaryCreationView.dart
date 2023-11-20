@@ -10,19 +10,19 @@ import 'package:sqflite_common/sqlite_api.dart';
 class diaryCreationView extends StatelessWidget {
 
   //database_manager.dartのDatabaseManagerクラスをインスタンスを取得
-  final DatabaseManager dbManager = DatabaseManager.instance;
-
+  final DatabaseManager _dbManager = DatabaseManager.instance;
   final ImagePicker _picker = ImagePicker();  // 画像選択用オブジェクト
   File? _file;  // 画像格納用ファイルオブジェクト  (?はnullを許容するという意味)
 
-  late DateTime nowDate;  // 現在日付   (lateは後でnull以外を設定するという意味
-  final DateFormat format = DateFormat('yyyy年M月d日'); // フォーマット用変数
-  String headerText = ""; // ヘッダー用文字列
+  late DateTime _nowDate;  // 現在日付   (lateは後でnull以外を設定するという意味
+  final DateFormat _format = DateFormat('yyyy年M月d日'); // フォーマット用変数
+  String _headerText = ""; // ヘッダー用文字列
+  String _diaryText = "";
 
   // コンストラクタ
   diaryCreationView(){
-    nowDate = DateTime.now();  // 現在時刻
-    headerText = format.format(nowDate);  // yyyy年M月d日をヘッダーに設定
+    _nowDate = DateTime.now();  // 現在時刻
+    _headerText = _format.format(_nowDate);  // yyyy年M月d日をヘッダーに設定
   }
 
   @override
@@ -30,17 +30,20 @@ class diaryCreationView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,  // タイトルを中央寄せする
-        title: Text(headerText),
+        title: Text(_headerText),
       ),
       body: Container(
         width: double.infinity,
-        child: const TextField(   // 入力テキストフィールド
+        child: TextField(   // 入力テキストフィールド
           keyboardType: TextInputType.multiline,
           maxLines: null,
           decoration: InputDecoration(    //テキスト フィールドを装飾するために使用
             border: InputBorder.none,     // テキストフィールドのボーダーを削除
             hintText: '本文',
           ),
+          onChanged: (text){
+            _diaryText = text;
+          },
         ),
       ),
       floatingActionButton: Column(
@@ -50,7 +53,7 @@ class diaryCreationView extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30), //角の丸み
             ),
-            child: const Icon(Icons.my_library_add),
+            child: const Icon(Icons.edit),
             onPressed: () {
               _insert();
             },
@@ -76,10 +79,10 @@ class diaryCreationView extends StatelessWidget {
   // insertが押されたときのメソッド
   void _insert() async {
     DiaryTableDao dao = DatabaseManager.getDiaryTableDao();
-    Database db = await dbManager.database;
+    Database db = await _dbManager.database;
     Map<String, dynamic> row = {
-      dao.columnDiaryDate : 20230925,
-      dao.columnDiaryText : "日記",
+      dao.columnDiaryDate : (_nowDate.year*10000) + (_nowDate.month*100) + _nowDate.day,
+      dao.columnDiaryText : _diaryText,
       dao.columnImageId1 : null,
       dao.columnImageId2 : null,
       dao.columnImageId3 : null,
