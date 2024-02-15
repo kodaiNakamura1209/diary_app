@@ -28,14 +28,29 @@ class DateBlock extends StatelessWidget {
           onTap: (){onTapDate!(date);},
           child: Container(
             height: 40,
-            child:Column(
+            child:ListView(
               children: [
                 Icon(icon),
-                Text(date.day.toString())
+                Text(
+                  date.day.toString(),
+                  textAlign: TextAlign.center
+                )
               ],
             ),
           ),
         );
+      // InkWell(
+      //   onTap: (){onTapDate!(date);},
+      //   child: Container(
+      //     height: 40,
+      //     child:Column(
+      //       children: [
+      //         Icon(icon),
+      //         Text(date.day.toString())
+      //       ],
+      //     ),
+      //   ),
+      // );
     }
   }
 }
