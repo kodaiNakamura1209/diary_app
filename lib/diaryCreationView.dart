@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:diary_app/db/database_manager.dart';
 import 'package:sqflite_common/sqlite_api.dart';
 
+import 'db/diary_table_dto.dart';
+
 class diaryCreationView extends StatelessWidget {
 
   //database_manager.dartのDatabaseManagerクラスをインスタンスを取得
@@ -21,12 +23,18 @@ class diaryCreationView extends StatelessWidget {
 
   // コンストラクタ
   diaryCreationView(){
-    _nowDate = DateTime.now();  // 現在時刻
+    _nowDate = DateTime.now();  // 現在日付
     _headerText = _format.format(_nowDate);  // yyyy年M月d日をヘッダーに設定
   }
 
   @override
   Widget build(BuildContext context) {
+
+    // 現在日付
+    int nowDateInt = (_nowDate.year*10000) + (_nowDate.month*100) + _nowDate.day;
+    // 既存の日記を取得
+    Future<DiaryTableDto> diaryTableDto = _serectTodayDiary(nowDateInt);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,  // タイトルを中央寄せする
@@ -34,17 +42,47 @@ class diaryCreationView extends StatelessWidget {
       ),
       body: Container(
         width: double.infinity,
-        child: TextField(   // 入力テキストフィールド
-          keyboardType: TextInputType.multiline,
-          maxLines: null,
-          decoration: InputDecoration(    //テキスト フィールドを装飾するために使用
-            border: InputBorder.none,     // テキストフィールドのボーダーを削除
-            hintText: '本文',
+          child:FutureBuilder<DiaryTableDto>(
+            future:diaryTableDto,
+            builder: (context,snapshot){
+              if(snapshot.hasError){
+                //　データがなかった場合
+                return TextField(   // 入力テキストフィールド
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: const InputDecoration(    //テキスト フィールドを装飾するために使用
+                    border: InputBorder.none,     // テキストフィールドのボーダーを削除
+                    hintText: '本文',
+                  ),
+                  onChanged: (text){
+                    _diaryText = text;
+                  },
+                );
+
+              } else if (snapshot.hasData) {
+                // データがあった場合
+                DiaryTableDto? result = snapshot.data;
+                return
+                 TextField(   // 入力テキストフィールド
+                  keyboardType: TextInputType.multiline,
+                  controller: TextEditingController(text: result?.diaryText),
+                  maxLines: null,
+                  decoration: const InputDecoration(    //テキスト フィールドを装飾するために使用
+                    border: InputBorder.none,     // テキストフィールドのボーダーを削除
+                    hintText: '本文',
+                  ),
+                  onChanged: (text){
+                    _diaryText = text;
+                  },
+                );
+
+
+              } else {
+                // データ取得中の場合
+                return Container();
+              }
+            },
           ),
-          onChanged: (text){
-            _diaryText = text;
-          },
-        ),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -55,7 +93,7 @@ class diaryCreationView extends StatelessWidget {
             ),
             child: const Icon(Icons.edit),
             onPressed: () {
-              _insert();
+              _diaryCreation(nowDateInt);
             },
           ),
           SizedBox(
@@ -76,10 +114,15 @@ class diaryCreationView extends StatelessWidget {
     );
   }
 
-  // insertが押されたときのメソッド
-  void _insert() async {
+  // 作成ボタンが押されたときのメソッド
+  void _diaryCreation(int nowDateInt) async {
     DiaryTableDao dao = DatabaseManager.getDiaryTableDao();
     Database db = await _dbManager.database;
+
+    // 日記が存在するか確認する
+    DiaryTableDto dto = await _serectTodayDiary(nowDateInt);
+    print("日付："+dto.diaryDate.toString());
+
     Map<String, dynamic> row = {
       dao.columnDiaryDate : (_nowDate.year*10000) + (_nowDate.month*100) + _nowDate.day,
       dao.columnDiaryText : _diaryText,
@@ -89,6 +132,15 @@ class diaryCreationView extends StatelessWidget {
       dao.columnImageId4 : null,
     };
     final id = await dao.insert(db,row);
-    print('inserted row id: $id');
+  }
+
+  Future<DiaryTableDto> _serectTodayDiary(int nowDateInt) async {
+    // daoとdbを取得
+    DiaryTableDao dao = DatabaseManager.getDiaryTableDao();
+    Database db = await _dbManager.database;
+
+    DiaryTableDto dto = await dao.queryRowDiaryDate(db,nowDateInt);
+    print("日付："+dto.diaryDate.toString());
+    return dto;
   }
 }

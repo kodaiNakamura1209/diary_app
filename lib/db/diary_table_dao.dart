@@ -43,7 +43,6 @@ class DiaryTableDao{
     List<int> dateList =  [];
     for (var row in result) {
       dateList.add(row[columnDiaryDate] as int);
-      print(row);
     }
 
     // 検索結果をDTOにつめる
@@ -59,12 +58,21 @@ class DiaryTableDao{
     var result = await db.query(table,where: columnDiaryDate+"=?",whereArgs: [diaryDate]);
 
     DiaryTableDto dto = DiaryTableDto();
-    dto.diaryDate = result[0][columnDiaryDate] as int;
-    dto.diaryText = result[0][columnDiaryText] as String;
-    dto.imageId1 = result[0][columnImageId1] as String?;
-    dto.imageId2 = result[0][columnImageId2] as String?;
-    dto.imageId3 = result[0][columnImageId3] as String?;
-    dto.imageId4 = result[0][columnImageId4] as String?;
+    if(result.isNotEmpty){
+      dto.diaryDate = result[0][columnDiaryDate] as int;
+      dto.diaryText = result[0][columnDiaryText] as String;
+      dto.imageId1 = result[0][columnImageId1] as String?;
+      dto.imageId2 = result[0][columnImageId2] as String?;
+      dto.imageId3 = result[0][columnImageId3] as String?;
+      dto.imageId4 = result[0][columnImageId4] as String?;
+    } else {
+      dto.diaryDate = 0;
+      dto.diaryText = "";
+      dto.imageId1 = null;
+      dto.imageId2 = null;
+      dto.imageId3 = null;
+      dto.imageId4 = null;
+    }
     return dto;
   }
 }
